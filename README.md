@@ -16,13 +16,20 @@ initial setup is required and listed below.
 Once MySQL Server is setup, a database needs to be created. This can be done from the terminal by 
 executing the following steps.
 
-Access MySQL (replace 'root' with your username)
+**Access MySQL from terminal (replace 'root' with your username)**
 ``` bash
 sudo mysql -u root -p
 ```
 Enter your password
 
-Create database for fund holdings
+**Create database for fund holdings**
 ``` sql
 CREATE DATABASE fund_holdings;
 ```
+
+### Create A Config File
+The Python scripts utilize a `config.py` file for accessing the following information that is unique 
+to the local host.
+
+* file path to directory of Ark CSVs
+* MySQL database name, username, password, host
