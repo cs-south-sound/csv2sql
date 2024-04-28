@@ -12,16 +12,17 @@ initial setup is required and listed below.
 * Python3 installed
 * Ark Invest CSVs downloaded and saved in a directory locally
 
+### Setting Up The Database
 Once MySQL Server is setup, a database needs to be created. This can be done from the terminal by 
 executing the following steps.
 
 Access MySQL (replace 'root' with your username)
-``` Bash
+``` bash
 sudo mysql -u root -p
 ```
 Enter your password
 
 Create database for fund holdings
-``` SQL
+``` sql
 CREATE DATABASE fund_holdings;
 ```
