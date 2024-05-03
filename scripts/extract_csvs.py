@@ -2,6 +2,7 @@
 
 # Import packages
 from sqlalchemy import create_engine
+import pandas as pd
 
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
@@ -23,3 +24,8 @@ print("Connected to MySQL database successfully!")
 
 # Close the engine (optional)
 engine.dispose()
+
+# Read csv as dataframe
+df = pd.read_csv('/home/matt/projects/ark_data/library/ark/ARKF-2024-03-08_07-12-59.csv')
+
+print(df)
