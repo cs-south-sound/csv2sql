@@ -2,7 +2,6 @@
 
 # Import packages
 from sqlalchemy import create_engine
-import pandas as pd
 
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
