@@ -22,10 +22,14 @@ engine = create_engine(connection_string)
 # Print a message to confirm connection
 print("Connected to MySQL database successfully!")
 
+# Read csv as dataframe
+df = pd.read_csv(csv_dir + '/ARKF-2024-03-08_07-12-59.csv')
+
+# Drop last row
+df = df[:-1]
+
+# Insert data into the database table
+df.to_sql('ARKF', )
+
 # Close the engine (optional)
 engine.dispose()
-
-# Read csv as dataframe
-df = pd.read_csv('/home/matt/projects/ark_data/library/ark/ARKF-2024-03-08_07-12-59.csv')
-
-print(df)
