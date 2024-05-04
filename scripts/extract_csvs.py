@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
+import pandas as pd
 
 # Database connection details
 user = db_user
@@ -28,7 +29,7 @@ df = pd.read_csv(csv_dir + '/ARKF-2024-03-08_07-12-59.csv')
 df = df[:-1]
 
 # Insert data into the database table
-df.to_sql('ARKF', )
+df.to_sql('ARKF', engine, index=False)
 
 # Close the engine (optional)
 engine.dispose()
