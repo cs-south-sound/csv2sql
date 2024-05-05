@@ -23,6 +23,9 @@ engine = create_engine(connection_string)
 # Print a message to confirm connection
 print('Connected to MySQL database successfully!')
 
+# Print message for looping through data
+print('Looping through directory of CSVs to ETL into database')
+
 # Loop through directory to extract data from csvs
 for filename in os.listdir(csv_dir):
     
