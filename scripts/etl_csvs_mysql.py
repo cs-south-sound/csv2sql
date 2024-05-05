@@ -14,6 +14,8 @@ password = db_pwd
 host = db_host
 database = db_name
 
+# Create function for connecting to database and executing statements using with statement?
+
 # Construct the connection string
 connection_string = f"mysql+pymysql://{user}:{password}@{host}/{database}"
 
@@ -42,7 +44,7 @@ for filename in os.listdir(csv_dir):
         df = df[:-1]
 
         # Insert data into the database table
-        df.to_sql('funds', engine, index=False, if_exists='append')
+        df.to_sql('holdings', engine, index=False, if_exists='append')
 
 # Close the engine (optional)
 engine.dispose()
