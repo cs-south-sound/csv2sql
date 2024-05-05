@@ -20,7 +20,7 @@ executing the following steps.
 ``` bash
 sudo mysql -u root -p
 ```
-Enter your password
+Enter your sudo Linux password, followed by your database user (root) password.
 
 **Create database for fund holdings**
 ``` sql
