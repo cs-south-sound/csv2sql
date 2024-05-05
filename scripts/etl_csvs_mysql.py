@@ -40,8 +40,19 @@ for filename in os.listdir(csv_dir):
         # Read csv as dataframe
         df = pd.read_csv(file_path)
 
+        # Check if last row has some NaNs then drop
         # Drop last row
         df = df[:-1]
+
+        # Remove comma in shares column
+
+        # Clean up dollar amount column
+
+        # Rename dollar amount column
+
+        # Clean up percentage column
+
+        # Rename percentage column
 
         # Insert data into the database table
         df.to_sql('holdings', engine, index=False, if_exists='append')
