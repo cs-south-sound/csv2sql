@@ -45,17 +45,21 @@ for filename in os.listdir(csv_dir):
         df = df[:-1]
 
         # Remove comma in shares column
+        df['shares'] = df['shares'].str.replace(',', '')
 
         # Clean up dollar amount column
-
-        # Rename dollar amount column
+        df['market value ($)'] = df['market value ($)'].str.replace('$', '').str.replace(',', '')
 
         # Clean up percentage column
+        df['weight (%)'] = df['weight (%)'].str.replace('%', '')
 
-        # Rename percentage column
+        # Rename columns
+        df = df.rename(columns={'market value ($)':'total_value', 'weight (%)':'portfolio_percentage'})
 
         # Insert data into the database table
         df.to_sql('holdings', engine, index=False, if_exists='append')
+
+        # Set correct data types of columns
 
 # Close the engine (optional)
 engine.dispose()
