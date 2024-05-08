@@ -1,4 +1,4 @@
-# script to extract data from multiple csvs and return one dataframe
+# script to extract data from multiple csvs and load them into a database
 
 # Import packages
 from sqlalchemy import create_engine, text
