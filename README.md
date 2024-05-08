@@ -33,3 +33,7 @@ to the local host.
 
 * file path to directory of Ark CSVs
 * MySQL database name, username, password, host
+
+## ETL Scripts
+There are three python scripts (`extract()`, `transform()`, `load()`) each designed to perform the 
+pipeline task they are named after.
