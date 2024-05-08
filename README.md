@@ -37,3 +37,6 @@ to the local host.
 ## ETL Scripts
 There are three python scripts (`extract()`, `transform()`, `load()`) each designed to perform the 
 pipeline task they are named after.
+
+Timing without the three scripts:
+Timing with the three scripts:
