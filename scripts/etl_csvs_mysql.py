@@ -1,7 +1,7 @@
 # script to extract data from multiple csvs and return one dataframe
 
 # Import packages
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
@@ -24,6 +24,15 @@ engine = create_engine(connection_string)
 
 # Print a message to confirm connection
 print('Connected to MySQL database successfully!')
+
+# Assign target table
+target_table = 'holdings'
+
+# Truncate table if it exists
+with engine.connect() as conn:
+    stmt = text(f"TRUNCATE TABLE {target_table}")
+    conn.execute(stmt)
+    print(f"Truncated table {target_table} succesfully")
 
 # Print message for looping through data
 print('Looping through directory of CSVs to ETL into database')
@@ -56,10 +65,14 @@ for filename in os.listdir(csv_dir):
         # Rename columns
         df = df.rename(columns={'market value ($)':'total_value', 'weight (%)':'portfolio_percentage'})
 
-        # Insert data into the database table
-        df.to_sql('holdings', engine, index=False, if_exists='append')
-
         # Set correct data types of columns
+        df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y')
+        df['shares'] = pd.to_numeric(df['shares'], errors='coerce')
+        df['total_value'] = pd.to_numeric(df['total_value'], errors='coerce')
+        df['portfolio_percentage'] = pd.to_numeric(df['portfolio_percentage'], errors='coerce')
+
+        # Insert data into the database table
+        df.to_sql(target_table, engine, index=False, if_exists='append')
 
 # Close the engine (optional)
 engine.dispose()
