@@ -27,6 +27,10 @@ Enter your sudo Linux password, followed by your database user (root) password.
 CREATE DATABASE fund_holdings;
 ```
 
+**Create table in MySQL database**
+Utilizing the `create_table.sql` script, create a table for inserting data with an auto increment
+primary key column.
+
 ### Create A Config File
 The Python scripts utilize a `config.py` file for accessing the following information that is unique 
 to the local host.
