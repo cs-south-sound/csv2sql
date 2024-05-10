@@ -7,6 +7,9 @@ from sqlalchemy import create_engine, text
 from config import csv_dir, db_name, db_host, db_pwd, db_user
 import pandas as pd
 import os
+import time
+
+start_time = time.time()
 
 # Database connection details
 user = db_user
@@ -79,3 +82,9 @@ engine.dispose()
 
 # Print message to confirm disconnection
 print('Disconnected from database')
+
+end_time = time.time()
+
+total_time = end_time - start_time
+
+print(f"Script execution time: {total_time} seconds")
