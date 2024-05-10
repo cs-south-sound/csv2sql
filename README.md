@@ -38,5 +38,5 @@ to the local host.
 There are three python scripts (`extract()`, `transform()`, `load()`) each designed to perform the 
 pipeline task they are named after.
 
-Timing without the three scripts:
+Timing without the three scripts: 5.595029830932617 seconds
 Timing with the three scripts:
