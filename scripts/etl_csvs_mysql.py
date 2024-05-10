@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, text
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
 import pandas as pd
-import os
+from extract import extract_csvs
 import time
 
 start_time = time.time()
@@ -40,42 +40,29 @@ with engine.connect() as conn:
 # Print message for looping through data
 print('Looping through directory of CSVs to ETL into database')
 
-# Loop through directory to extract data from csvs
-for filename in os.listdir(csv_dir):
-    
-    # Check if it's a csv file
-    if filename.endswith('.csv'):
-    
-        # Construct full path for csv
-        file_path = os.path.join(csv_dir, filename)
-        
-        # Read csv as dataframe
-        df = pd.read_csv(file_path)
+# Extract csvs to dataframe
+df = extract_csvs(csv_dir)
 
-        # Check if last row has some NaNs then drop
-        # Drop last row
-        df = df[:-1]
+# Remove comma in shares column
+df['shares'] = df['shares'].str.replace(',', '')
 
-        # Remove comma in shares column
-        df['shares'] = df['shares'].str.replace(',', '')
+# Clean up dollar amount column
+df['market value ($)'] = df['market value ($)'].str.replace('$', '').str.replace(',', '')
 
-        # Clean up dollar amount column
-        df['market value ($)'] = df['market value ($)'].str.replace('$', '').str.replace(',', '')
+# Clean up percentage column
+df['weight (%)'] = df['weight (%)'].str.replace('%', '')
 
-        # Clean up percentage column
-        df['weight (%)'] = df['weight (%)'].str.replace('%', '')
+# Rename columns
+df = df.rename(columns={'market value ($)':'total_value', 'weight (%)':'portfolio_percentage'})
 
-        # Rename columns
-        df = df.rename(columns={'market value ($)':'total_value', 'weight (%)':'portfolio_percentage'})
+# Set correct data types of columns
+df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y')
+df['shares'] = pd.to_numeric(df['shares'], errors='coerce')
+df['total_value'] = pd.to_numeric(df['total_value'], errors='coerce')
+df['portfolio_percentage'] = pd.to_numeric(df['portfolio_percentage'], errors='coerce')
 
-        # Set correct data types of columns
-        df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y')
-        df['shares'] = pd.to_numeric(df['shares'], errors='coerce')
-        df['total_value'] = pd.to_numeric(df['total_value'], errors='coerce')
-        df['portfolio_percentage'] = pd.to_numeric(df['portfolio_percentage'], errors='coerce')
-
-        # Insert data into the database table
-        df.to_sql(target_table, engine, index=False, if_exists='append')
+# Insert data into the database table
+df.to_sql(target_table, engine, index=False, if_exists='append')
 
 # Close the engine (optional)
 engine.dispose()
