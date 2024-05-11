@@ -9,6 +9,7 @@ from config import csv_dir, db_name, db_host, db_pwd, db_user
 # Import required packages
 import pandas as pd
 from extract import extract_csvs
+from transform import transform_ark
 import time
 
 start_time = time.time()
@@ -45,26 +46,11 @@ print('Looping through directory of CSVs to ETL into database')
 # Extract csvs to dataframe
 df = extract_csvs(csv_dir)
 
-# Remove comma in shares column
-df['shares'] = df['shares'].str.replace(',', '')
-
-# Clean up dollar amount column
-df['market value ($)'] = df['market value ($)'].str.replace('$', '').str.replace(',', '')
-
-# Clean up percentage column
-df['weight (%)'] = df['weight (%)'].str.replace('%', '')
-
-# Rename columns
-df = df.rename(columns={'market value ($)':'total_value', 'weight (%)':'portfolio_percentage'})
-
-# Set correct data types of columns
-df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y')
-df['shares'] = pd.to_numeric(df['shares'], errors='coerce')
-df['total_value'] = pd.to_numeric(df['total_value'], errors='coerce')
-df['portfolio_percentage'] = pd.to_numeric(df['portfolio_percentage'], errors='coerce')
+# Transform extracted data
+clean_df = transform_ark(df)
 
 # Insert data into the database table
-df.to_sql(target_table, engine, index=False, if_exists='append')
+clean_df.to_sql(target_table, engine, index=False, if_exists='append')
 
 # Close the engine (optional)
 engine.dispose()
