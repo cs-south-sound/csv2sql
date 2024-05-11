@@ -10,7 +10,7 @@ source venv/bin/activate
 cd scripts
 
 # Run python script
-python3 etl_csvs_mysql.py
+python3 load.py
 
 cd ..
 
