@@ -45,7 +45,3 @@ pipeline task they are named after.
 ## Scheduling A Job
 Using the `pipeline.sh` script, a job can be to run `load.py` which calls on `extract.py` and 
 `transform.py` to ETL the data on a scheduled basis. 
-
-Timing without the three scripts: 5.595029830932617 seconds
-Just separating extract script: 1.501007080078125 seconds
-Timing with the three scripts: 1.4699993133544922 seconds
