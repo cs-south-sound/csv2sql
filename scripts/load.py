@@ -2,15 +2,16 @@
 
 # Import packages
 from sqlalchemy import create_engine, text
+import pandas as pd
+import time
 
 # Import parameters from config file
 from config import csv_dir, db_name, db_host, db_pwd, db_user
 
-# Import required packages
-import pandas as pd
+# Import required functions
 from extract import extract_csvs
 from transform import transform_ark
-import time
+
 
 start_time = time.time()
 
