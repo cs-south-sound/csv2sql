@@ -20,8 +20,6 @@ password = db_pwd
 host = db_host
 database = db_name
 
-# Create function for connecting to database and executing statements using with statement?
-
 # Construct the connection string
 connection_string = f"mysql+pymysql://{user}:{password}@{host}/{database}"
 
